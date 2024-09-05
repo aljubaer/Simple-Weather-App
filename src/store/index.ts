@@ -1,7 +1,6 @@
 import axios from "axios";
 import { create } from "zustand";
 import { buildUrl } from "../utils";
-import { QueryParams } from "../types";
 
 type SearchTokenStore = {
   searchToken: string;

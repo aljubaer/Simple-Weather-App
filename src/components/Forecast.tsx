@@ -2,45 +2,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 // @ts-ignore
 import ReactAnimatedWeather from "react-animated-weather";
-import { convertToFahrenheit } from "../utils";
+import { convertToFahrenheit, getCurrentDate } from "../utils";
 
 function Forecast({ weather }: any) {
   const data = weather;
-  const [ forecastData, setForecastData ] = useState([]);
   const [ isCelsius, setIsCelsius ] = useState(true);
-
-  useEffect(() => {
-    const fetchForecastData = async () => {
-      const apiKey = "39e5af8477da8f284c04dec133475953";
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=dhaka&appid=${apiKey}&units=metric`;
-
-      try {
-        const response = await axios.get(url);
-        setForecastData(response.data.daily);
-      } catch (error) {
-        console.log("Error fetching forecast data:", error);
-      }
-    };
-
-    fetchForecastData();
-  }, [data.city]);
-
-  const formatDay = (dateString: any) => {
-    const options = { weekday: "short" } as const;
-    const date = new Date(dateString * 1000);
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  const getCurrentDate = () => {
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    } as const;
-    const currentDate = new Date().toLocaleDateString("en-US", options);
-    return currentDate;
-  };
 
   const toggleTemperatureUnit = () => {
     setIsCelsius((prevState) => !prevState);
