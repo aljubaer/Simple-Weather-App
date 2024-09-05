@@ -3,7 +3,6 @@ import { useGetWeatherData, useSearchTokenStore } from "../store";
 // import { debounce } from "../utils/debounce";
 
 function SearchBar() {
-
   const getData = useGetWeatherData();
 
   const { searchToken, update } = useSearchTokenStore();
@@ -11,8 +10,15 @@ function SearchBar() {
   useEffect(() => {
     // console.log(searchToken)
     // debounce(() => getData.execute(), 100)
-    getData.execute();
-  }, [searchToken])
+
+    //Implementing the setInterval method
+    const interval = setInterval(() => {
+      getData.execute();
+    }, 10000);
+
+    //Clearing the interval
+    return () => clearInterval(interval);
+  }, [searchToken]);
 
   return (
     <div className="SearchEngine">
@@ -25,7 +31,9 @@ function SearchBar() {
         onChange={(e) => update(e.target.value)}
         // onKeyPress={handleKeyPress}
       />
-      <button onClick={() => getData.execute()}><i className="fas fa-search" style={{ fontSize: "18px" }}></i></button>
+      <button onClick={() => getData.execute()}>
+        <i className="fas fa-search" style={{ fontSize: "18px" }}></i>
+      </button>
     </div>
   );
 }
